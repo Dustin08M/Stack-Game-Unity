@@ -9,10 +9,6 @@ public class CycleColor : MonoBehaviour
 
     Renderer rend;
 
-    int currentIndex = 0;
-    int nextIndex = 1;
-    float t;
-
     private void Start()
     {
         rend = GetComponent<Renderer>();
