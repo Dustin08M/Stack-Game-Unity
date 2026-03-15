@@ -8,7 +8,7 @@ public class MoveBlock : MonoBehaviour
     public float blckSpeed = 2.5f;
     public bool IsHorizontal;
 
-    [SerializeField] float moveLimit = 2f;
+    [SerializeField] float moveLimit = 3f;
     bool isMoving = true;
 
     private void OnEnable()
@@ -18,14 +18,6 @@ public class MoveBlock : MonoBehaviour
     private void OnDisable()
     {
         GameManager.OnStackPressed -= _gmFnc_StopBlock;
-    }
-
-    private void Start()
-    {
-/*        if (isMovingHor())
-            spawnXpos();
-        else
-            spawnZpos();*/
     }
     void Update()
     {

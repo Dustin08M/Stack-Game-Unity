@@ -9,7 +9,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject prevBlock;
     [SerializeField] int score;
     GameObject spawnBlock;
-    float heightPos = .3f;
     bool isBlockX;
 
     public static event Action OnStackPressed;
@@ -36,32 +35,6 @@ public class GameManager : MonoBehaviour
     void _gmFnc_SpawnBlock()
     {
         spawnBlock = BlockSpawner.Spawn(prevBlock,blockPrefab, isBlockX);
-
-        /*Vector3 blockHeight = prevBlock.transform.position + Vector3.up * heightPos;
-        if (isBlockX)
-        {
-            Vector3 blockXoffSet = prevBlock.transform.position;
-            blockXoffSet.x -= 2f;
-            spawnBlock = Instantiate(blockPrefab);
-            spawnBlock.transform.position = blockHeight;
-
-            // Current block's scale is based from prev block's scale
-            spawnBlock.transform.localScale = prevBlock.transform.localScale;
-            MoveBlock mb = spawnBlock.GetComponent<MoveBlock>();
-            mb.IsHorizontal = isBlockX;
-        }
-        else
-        {
-            Vector3 blockZoffSet = prevBlock.transform.position;
-            blockZoffSet.z += 2f;
-            spawnBlock = Instantiate(blockPrefab);
-            spawnBlock.transform.position = blockHeight;
-
-            // Current block's scale is based from prev block's scale
-            spawnBlock.transform.localScale = prevBlock.transform.localScale;
-            MoveBlock mb = spawnBlock.GetComponent<MoveBlock>();
-            mb.IsHorizontal = isBlockX;
-        }*/
     }
 
     void _gmFnc_PlaceBlock()

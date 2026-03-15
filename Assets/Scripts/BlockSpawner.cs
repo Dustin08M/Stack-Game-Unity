@@ -7,13 +7,14 @@ public class BlockSpawner
     public static GameObject Spawn(GameObject _prevBlock, GameObject _prefab, bool isBlockX)
     {
         Vector3 spawnPos = _prevBlock.transform.position + Vector3.up * .3f;
+        float PosLimit = 3.5f;
 
         if (isBlockX)
         {
-            spawnPos.x -= 2f;
+            spawnPos.x -= PosLimit;
         }
         else
-            spawnPos.z += 2f;
+            spawnPos.z += PosLimit;
         
         GameObject currentBlock = Object.Instantiate(_prefab,spawnPos,Quaternion.identity);
 

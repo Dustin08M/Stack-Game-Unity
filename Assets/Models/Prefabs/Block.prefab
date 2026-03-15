@@ -118,3 +118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b58cd197b6853ef4695b28cce521d76d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  blckSpeed: 2.5
+  IsHorizontal: 0
+  moveLimit: 3
