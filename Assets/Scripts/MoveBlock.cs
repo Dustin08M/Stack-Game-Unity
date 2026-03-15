@@ -8,6 +8,8 @@ public class MoveBlock : MonoBehaviour
     public float blckSpeed = 2.5f;
     public bool IsHorizontal;
 
+    [SerializeField] float moveLimit = 2f;
+    bool isMoving = true;
 
     private void OnEnable()
     {
@@ -20,81 +22,57 @@ public class MoveBlock : MonoBehaviour
 
     private void Start()
     {
-        if (isMovingHor())
+/*        if (isMovingHor())
             spawnXpos();
         else
-            spawnZpos();
+            spawnZpos();*/
     }
     void Update()
     {
-        if (isMovingHor())
+        if (!isMoving) return;
+
+        Move();
+    }
+    void Move()
+    {
+        Vector3 direction = IsHorizontal ? Vector3.right : Vector3.back;
+
+        transform.position += direction * blckSpeed * Time.deltaTime;
+
+        if (IsHorizontal)
         {
-            _gmFnc_MoveBlockLeft();
+            if (transform.position.x <= -moveLimit || transform.position.x >= moveLimit)
+            {
+                FlipX();
+            }
         }
         else
-            _gmFnc_MoveBlockForward();
-
+        {
+            if (transform.position.z <= -moveLimit || transform.position.z >= moveLimit)
+            {
+                FlipZ();
+            }
+        }
     }
-    bool isMovingHor()
+
+    void FlipX()
     {
-        return IsHorizontal;
+        float clampedX = Mathf.Clamp(transform.position.x, -moveLimit, moveLimit);
+        transform.position = new Vector3(clampedX, transform.position.y, transform.position.z);
+
+        blckSpeed *= -1f;
     }
 
-    //"_gmFnc" simply means "Game Function", followed by name of function
-    public void _gmFnc_MoveBlockLeft()
+    void FlipZ()
     {
-        transform.position += Vector3.right * blckSpeed * Time.deltaTime;
-        /*        if (transform.position.x < -2f || transform.position.x > 2f)
-                    blckSpeed *= -1;*/
-        if (transform.position.x <= -2f)
-        {
-            Vector3 flipPos = new Vector3(-2f, transform.position.y, transform.position.z);
-            transform.position = flipPos;
-            blckSpeed *= -1f;
-        }
-        if (transform.position.x >= 2f)
-        {
-            Vector3 flipPos = new Vector3(2f, transform.position.y, transform.position.z);
-            transform.position = flipPos;
-            blckSpeed *= -1f;
-        }
+        float clampedZ = Mathf.Clamp(transform.position.z, -moveLimit, moveLimit);
+        transform.position = new Vector3(transform.position.x, transform.position.y, clampedZ);
 
+        blckSpeed *= -1f;
     }
-    public void _gmFnc_MoveBlockForward()
-    {
-        transform.position += Vector3.back * blckSpeed * Time.deltaTime;
-        /*        if (transform.position.z < -2f || transform.position.z > 2f)
-                    blckSpeed *= -1;*/
-        if (transform.position.z <= -2f)
-        {
-            Vector3 flipPos = new Vector3(transform.position.x, transform.position.y, -2f);
-            transform.position = flipPos;
-            blckSpeed *= -1f;
-        }
-        if (transform.position.z >= 2f)
-        {
-            Vector3 flipPos = new Vector3(transform.position.x, transform.position.y, 2f);
-            transform.position = flipPos;
-            blckSpeed *= -1f;
-        }
-    }
-
+    
     void _gmFnc_StopBlock()
     {
-        blckSpeed = 0;
+        isMoving = false;
     }
-
-    void spawnXpos()
-    {
-        Vector3 xSpawn = transform.position;
-        xSpawn.x -= 2f;
-        transform.position = xSpawn;
-    }
-    void spawnZpos()
-    {
-        Vector3 zSpawn = transform.position;
-        zSpawn.z += 2f;
-        transform.position = zSpawn;
-    }
-
 }

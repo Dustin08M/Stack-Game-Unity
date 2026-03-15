@@ -35,12 +35,13 @@ public class GameManager : MonoBehaviour
 
     void _gmFnc_SpawnBlock()
     {
-        Vector3 blockHeight = prevBlock.transform.position + Vector3.up * heightPos;
+        spawnBlock = BlockSpawner.Spawn(prevBlock,blockPrefab, isBlockX);
+
+        /*Vector3 blockHeight = prevBlock.transform.position + Vector3.up * heightPos;
         if (isBlockX)
         {
             Vector3 blockXoffSet = prevBlock.transform.position;
             blockXoffSet.x -= 2f;
-            Vector3 blockPos = new Vector3(blockXoffSet.x, blockHeight.y, prevBlock.transform.position.z);
             spawnBlock = Instantiate(blockPrefab);
             spawnBlock.transform.position = blockHeight;
 
@@ -53,7 +54,6 @@ public class GameManager : MonoBehaviour
         {
             Vector3 blockZoffSet = prevBlock.transform.position;
             blockZoffSet.z += 2f;
-            Vector3 blockPos = new Vector3(prevBlock.transform.position.x, blockHeight.y, blockZoffSet.z);
             spawnBlock = Instantiate(blockPrefab);
             spawnBlock.transform.position = blockHeight;
 
@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
             spawnBlock.transform.localScale = prevBlock.transform.localScale;
             MoveBlock mb = spawnBlock.GetComponent<MoveBlock>();
             mb.IsHorizontal = isBlockX;
-        }
+        }*/
     }
 
     void _gmFnc_PlaceBlock()
