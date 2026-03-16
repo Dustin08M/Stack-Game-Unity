@@ -38,6 +38,10 @@ public class SplitBlock
 
             float dbSize = originalSize - overlap;
             GameObject deadBlock = Object.Instantiate(_currentBlock);
+            deadBlock.name = "DeadBlock".ToString();
+            deadBlock.GetComponent<MoveBlock>().isMoving = false;
+            deadBlock.AddComponent<Rigidbody>();
+
             Vector3 deadScale = deadBlock.transform.localScale;
             deadScale.x = dbSize;
             deadBlock.transform.localScale = deadScale;
@@ -45,10 +49,7 @@ public class SplitBlock
             //Set dead X Pos
             float deadX = newX + (overlap / 2 + dbSize / 2) * Mathf.Sign(gapAmount);
             deadBlock.transform.position = new Vector3(deadX, _currentBlock.transform.position.y, _currentBlock.transform.position.z);
-            deadBlock.GetComponent<MoveBlock>().blckSpeed = 0;
-            deadBlock.AddComponent<Rigidbody>();
             
-
             return true;
         }
         else
@@ -80,6 +81,10 @@ public class SplitBlock
 
             float dbSize = originalSize - overlap;
             GameObject deadBlock = Object.Instantiate(_currentBlock);
+            deadBlock.name = "DeadBlock".ToString();
+            deadBlock.GetComponent<MoveBlock>().isMoving = false;
+            deadBlock.AddComponent<Rigidbody>();
+
             Vector3 deadScale = deadBlock.transform.localScale;
             deadScale.z = dbSize;
             deadBlock.transform.localScale = deadScale;
@@ -87,9 +92,6 @@ public class SplitBlock
             //Set dead X Pos
             float deadZ = newZ + (overlap / 2 + dbSize / 2) * Mathf.Sign(gapAmount);
             deadBlock.transform.position = new Vector3(_currentBlock.transform.position.x, _currentBlock.transform.position.y, deadZ);
-
-            deadBlock.GetComponent<MoveBlock>().blckSpeed = 0;
-            deadBlock.AddComponent<Rigidbody>();
 
             return true;
         }

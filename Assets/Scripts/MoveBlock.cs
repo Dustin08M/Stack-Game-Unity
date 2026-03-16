@@ -9,7 +9,7 @@ public class MoveBlock : MonoBehaviour
     public bool IsHorizontal;
 
     [SerializeField] float moveLimit = 3f;
-    bool isMoving = true;
+    public bool isMoving = true;
 
     private void OnEnable()
     {
