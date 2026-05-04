@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class SplitBlock
+public static class SplitBlock
 {
     public static bool Split (GameObject _currentBlock, GameObject _prevBlock, bool isHorizontal)
     {

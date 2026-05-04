@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BlockSpawner
+public static class BlockSpawner
 {
     public static GameObject Spawn(GameObject _prevBlock, GameObject _prefab, bool isBlockX)
     {
@@ -17,6 +17,8 @@ public class BlockSpawner
             spawnPos.z += PosLimit;
         
         GameObject currentBlock = Object.Instantiate(_prefab,spawnPos,Quaternion.identity);
+
+        currentBlock.GetComponent<Renderer>().material.color = Function_Extension.GetNextStackColor();
 
         currentBlock.transform.position = spawnPos;
         currentBlock.transform.localScale = _prevBlock.transform.localScale;

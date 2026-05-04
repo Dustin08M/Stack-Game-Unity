@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] GameObject blockPrefab;
     [SerializeField] GameObject prevBlock;
+    [SerializeField] Color BaseBlockColor;
     [SerializeField] int score;
     GameObject spawnBlock;
     bool isBlockX;
@@ -15,6 +16,15 @@ public class GameManager : MonoBehaviour
     public static event Action isBlockHor;
     // Start is called before the first frame update
 
+
+    private void OnEnable()
+    {
+        BlockColor.SetCurColorBlock += _gmFnc_SetBlockColor;
+    }
+    private void OnDestroy()
+    {
+        BlockColor.SetCurColorBlock -= _gmFnc_SetBlockColor;
+    }
     void Start()
     {
         isBlockX = Function_Extension.Rndmz_BlockMovement();
@@ -32,18 +42,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void _gmFnc_SpawnBlock()
-    {
-        spawnBlock = BlockSpawner.Spawn(prevBlock,blockPrefab, isBlockX);
-    }
-
-    void _gmFnc_PlaceBlock()
+    void _gmFnc_PlaceBlock() // Step 1
     {
         OnStackPressed?.Invoke();
         isBlockX = !isBlockX;
         _gmFnc_CheckGap();
     }
-    void _gmFnc_CheckGap()
+    void _gmFnc_CheckGap() // Step 2
     {
         MoveBlock moveBlock = spawnBlock.GetComponent<MoveBlock>();
         bool hasBlockLeft = SplitBlock.Split(spawnBlock, prevBlock, moveBlock.IsHorizontal);
@@ -54,5 +59,17 @@ public class GameManager : MonoBehaviour
         }
         prevBlock = spawnBlock;
         _gmFnc_SpawnBlock();
+    }
+
+    void _gmFnc_SpawnBlock() // Step3
+    {
+        spawnBlock = BlockSpawner.Spawn(prevBlock, blockPrefab, isBlockX);
+    }
+    void _gmFnc_SetBlockColor()
+    {
+        BaseBlockColor = prevBlock.GetComponent<Renderer>().material.color;
+        blockPrefab.GetComponent<Renderer>().material.color = BaseBlockColor;
+/*        Color newColor = Function_Extension.GetNextStackColor();
+        CycleColor.SetCurrentBlockColor(spawnBlock.GetComponent<Renderer>(), newColor);*/
     }
 }

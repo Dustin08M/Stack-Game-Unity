@@ -17,4 +17,18 @@ public static class Function_Extension
             hue = 0f;
         return Color.HSVToRGB(hue, 0.8f, 0.9f);
     }
+    public static Color SetRandomColor()
+    {
+        return Random.ColorHSV();
+    }
+
+    public static void SetCurrentBlockColor(Renderer rend, Color color)
+    {
+        rend.material.color = color;
+    }
+
+    public static Color GetRendColor(Renderer rend)
+    {
+        return rend.material.color;
+    }
 }
