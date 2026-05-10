@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
     GameObject spawnBlock;
     bool isBlockX;
 
+    public static GameManager Instance { get; private set; }
+
+    public static event Action <int> OnScoreChanged;
     public static event Action OnStackPressed;
     public static event Action isBlockHor;
     // Start is called before the first frame update
@@ -24,6 +27,15 @@ public class GameManager : MonoBehaviour
     private void OnDestroy()
     {
         BlockColor.SetCurColorBlock -= _gmFnc_SetBlockColor;
+    }
+
+    void Awake()
+    {
+        if(Instance != null)
+        {
+            Instance = this;
+        }
+        Instance = this;
     }
     void Start()
     {
@@ -57,6 +69,7 @@ public class GameManager : MonoBehaviour
             Debug.Log("Game Over");
             return;
         }
+        OnScoreChanged?.Invoke(1);
         prevBlock = spawnBlock;
         _gmFnc_SpawnBlock();
     }
